@@ -1,0 +1,69 @@
+<html>
+<head>
+  <title>DEMO</title>
+  <script src="jquery.min.js"></script>
+</head>
+<body>
+URL1: <input type="text" class="url" /><br />
+URL2: <input type="text" class="url" /><br />
+URL3: <input type="text" class="url" /><br />
+URL4: <input type="text" class="url" /><br />
+URL5: <input type="text" class="url" /><br />
+URL6: <input type="text" class="url" /><br />
+URL7: <input type="text" class="url" /><br />
+URL8: <input type="text" class="url" /><br />
+URL9: <input type="text" class="url" /><br />
+URL10: <input type="text" class="url" /><br />
+<br />
+<input type="button" id="check" value="check" />
+<div id="result"></div>
+<script>
+  var results = [];
+
+  $('#check').on('click', function () {
+    var urls = [];
+    $('.url').each(function (index, ele) {
+      var value = ele.value;
+      if (value !== '') urls.push(value);
+    });
+    if (urls.length) {
+      $.post('/api', { urls: urls }, function (data) {
+        results = Array.prototype.concat.apply(results, data.urls);
+        var html = "";
+        for(var i = results.length; i--;){
+          html += [
+            '<a href="',
+            results[i],
+            '" target="_blank">',
+            results[i],
+            '</a><br />'
+          ].join('');
+        }
+        $('#result').html(html);
+        if(!data.finished) _next(data.timestamp);
+      });
+    }
+  })
+
+  function _next(timestamp) {
+    $.post('/api', { timestamp: timestamp}, function (data) {
+      results = Array.prototype.concat.apply(results, data.urls);
+      var html = "";
+      for(var i = results.length; i--;){
+        html += [
+          '<a href="',
+          results[i],
+          '" target="_blank">',
+          results[i],
+          '</a><br />'
+        ].join('');
+      }
+      $('#result').html(html);
+      if (!data.finished) _next(data.timestamp);
+      if (data.finished) results = [];
+    });
+  }
+</script>
+
+</body>
+</html>
