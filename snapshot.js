@@ -1,9 +1,11 @@
 var webpage = require('webpage')
   , args = require('system').args
+  , fs = require('fs')
 	, timestamp = args[1]
 	, urls = args.slice(2)
 	, len = urls.length
-  , currentNum = 0;
+  , currentNum = 0
+  , pkg = JSON.parse(fs.read('./package.json'));
 
 function snapshot(url, id) {
   var page = webpage.create()
@@ -31,15 +33,18 @@ function snapshot(url, id) {
           '&url=',
           encodeURIComponent(url),
           '&image=',
-          encodeURIComponent('http://localhost:3000/snapshot/' + timestamp + '/' + id + '.png'),
+          encodeURIComponent('http://localhost:' + pkg.port + '/snapshot/' + timestamp + '/' + id + '.png'),
           '&id=',
           id
         ].join('');
+    postPage.customHeaders = {
+      'secret': pkg.secret
+    };
     postPage.onLoadFinished = function(){
       postPage.close();
       (++currentNum === len) && (phantom.exit());
     }
-    postPage.open('http://localhost:3000/bridge', 'POST', data, function () {});
+    postPage.open('http://localhost:' + pkg.port + '/bridge', 'POST', data, function () {});
     // release the memory
     page.close();
   });

@@ -3,14 +3,14 @@ module.exports = (function () {
   var connect = require('connect')
     , fs = require('fs')
     , child_process = require('child_process')
-    , Watcher = require('./Watcher.js')
-    , maxAge = 3600;
+    , Watcher = require('./lib/Watcher.js')
+    , pkg = JSON.parse(fs.readFileSync('./package.json'));
 
   var app = connect()
-    .use('/snapshot', connect.static(__dirname + '/snapshot', { maxAge: maxAge }))
+    .use('/snapshot', connect.static(__dirname + '/snapshot', { maxAge: pkg.maxAge }))
     .use(connect.bodyParser())
     .use('/bridge', function (req, res, next) {
-      if (req.method !== "POST") return next();
+      if (req.method !== "POST" || req.headers.secret !== pkg.secret) return next();
       var body = req.body;
       Watcher.fire(body.timestamp, body.id, body.url, body.image, body.html);
     })
@@ -38,7 +38,7 @@ module.exports = (function () {
       Watcher.register(commands[2], commands.length - 3, req, res, next);
 
     })
-    .use(connect.static(__dirname, { maxAge: maxAge }))
-    .listen(3000, function () { console.log('listen: ' + 3000); });
+    .use(connect.static(__dirname + '/html', { maxAge: pkg.maxAge }))
+    .listen(pkg.port, function () { console.log('listen: ' + pkg.port); });
 
 })();
