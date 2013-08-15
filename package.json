@@ -6,8 +6,8 @@
 		"test": "mocha"
 	},
 	"devDependencies": {
-		"mocha": "~1.6.0",
-		"connect": "~2.8.4",
+		"mocha": "*",
+		"connect": "*",
 		"should": "*"
 	}
 }

@@ -24,8 +24,7 @@ function snapshot(url, id) {
     page.render('snapshot/' + timestamp + '/' + id + '.png');
     var html = page.content;
     // callback NodeJS
-    var postPage = webpage.create()
-      , data = [
+    var data = [
           'html=',
           encodeURIComponent(html),
           '&timestamp=',
@@ -37,19 +36,25 @@ function snapshot(url, id) {
           '&id=',
           id
         ].join('');
-    postPage.customHeaders = {
-      'secret': pkg.secret
-    };
-    postPage.onLoadFinished = function(){
-      postPage.close();
-      (++currentNum === len) && (phantom.exit());
-    }
     postPage.open('http://localhost:' + pkg.port + '/bridge', 'POST', data, function () {});
     // release the memory
     page.close();
   });
 }
 
-for (var i = len; i--;) {
-  snapshot(urls[i], i);
+if (len) {
+  var postPage = webpage.create();
+  postPage.customHeaders = {
+    'secret': pkg.secret
+  };
+  postPage.onLoadFinished = function(){
+    if (currentNum++ === len) {
+      postPage.close();
+      phantom.exit();
+    }
+  }
+
+  for (var i = len; i--;) {
+    snapshot(urls[i], i);
+  }
 }
