@@ -1,4 +1,4 @@
-﻿﻿# url-extract
+# url-extract
 
 Homepage: https://github.com/miniflycn/url-extract
 
