@@ -1,6 +1,7 @@
 module.exports = (function () {
   "use strict"
   var fs = require('fs')
+    , fetch = require('./fetch.js')
     , _watchers = {};
 
   function _send(timestamp){
@@ -17,7 +18,6 @@ module.exports = (function () {
       watcher.urls = [];
       var res = watcher.res;
       if (finished) {
-        _watchers[timestamp].watcher.close();
         _watchers[timestamp] = null;
         delete _watchers[timestamp]
       }
@@ -33,7 +33,6 @@ module.exports = (function () {
       urlsNum: urlsNum,
       finishNum: 0,
       urls: [],
-      fileMap: {},
       res: null,
       timeout: false
     };
@@ -41,31 +40,37 @@ module.exports = (function () {
   }
 
   function watch(timestamp, req, res, next) {
-    var watcher = _watchers[timestamp];
-    watcher.res = res;
-    watcher.watcher = fs.watch(__dirname + '/snapshot/' + timestamp, function (event, filename) {
-      if (event === 'rename') watcher.fileMap[filename] = 0;
-      if (event === 'change') watcher.fileMap[filename]++;
-      if (watcher.fileMap[filename] === 3) {
-        watcher.finishNum ++;
-        watcher.urls.push('http://localhost:3000/snapshot/' + timestamp + '/' + filename);
-        if (!watcher.timeout){
-          watcher.timeout = true;
-          setTimeout(function () {
-            _send(timestamp);
-          }, 500);
-        }
-      }
-    });
+    _watchers[timestamp].res = res;
     // 20s timeout
     setTimeout(function () {
       _send(timestamp);
     }, 20000)
   }
 
+  function fire(timestamp, id, url, image, html) {
+    var watcher = _watchers[timestamp]
+      , fetchObj = fetch(html);
+
+    watcher.urls.push({
+      id: id,
+      url: url,
+      image: image,
+      title: fetchObj.title,
+      description: fetchObj.description
+    });
+    if (!watcher.timeout) {
+      watcher.timeout = true;
+      setTimeout(function () {
+        _send(timestamp);
+      }, 500);
+    }
+    watcher.finishNum ++;
+  }
+
   return {
     register: register,
-    watch: watch
+    watch: watch,
+    fire: fire
   };
 
 })();

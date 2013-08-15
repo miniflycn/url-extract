@@ -32,11 +32,18 @@ URL10: <input type="text" class="url" /><br />
         var html = "";
         for(var i = results.length; i--;){
           html += [
-            '<a href="',
-            results[i],
+            '<h3>',
+            results[i].url,
+            '</h3>',
+            '<p>title: ',
+            results[i].title,
+            '</p><p>description: ',
+            results[i].description,
+            '</p>image: <a href="',
+            results[i].image,
             '" target="_blank">',
-            results[i],
-            '</a><br />'
+            results[i].image,
+            '</a></p>'
           ].join('');
         }
         $('#result').html(html);
@@ -51,11 +58,18 @@ URL10: <input type="text" class="url" /><br />
       var html = "";
       for(var i = results.length; i--;){
         html += [
-          '<a href="',
-          results[i],
+          '<h3>',
+          results[i].url,
+          '</h3>',
+          '<p>title: ',
+          results[i].title,
+          '</p><p>description: ',
+          results[i].description,
+          '</p>image: <a href="',
+          results[i].image,
           '" target="_blank">',
-          results[i],
-          '</a><br />'
+          results[i].image,
+          '</a></p>'
         ].join('');
       }
       $('#result').html(html);

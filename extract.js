@@ -9,6 +9,11 @@ module.exports = (function () {
   var app = connect()
     .use('/snapshot', connect.static(__dirname + '/snapshot', { maxAge: maxAge }))
     .use(connect.bodyParser())
+    .use('/bridge', function (req, res, next) {
+      if (req.method !== "POST") return next();
+      var body = req.body;
+      Watcher.fire(body.timestamp, body.id, body.url, body.image, body.html);
+    })
     .use('/api', function (req, res, next) {
       if (req.method !== "POST") return next();
       if (req.body.timestamp) return Watcher.watch(req.body.timestamp, req, res, next);
@@ -37,6 +42,3 @@ module.exports = (function () {
     .listen(3000, function () { console.log('listen: ' + 3000); });
 
 })();
-
-
-
