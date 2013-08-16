@@ -1,13 +1,12 @@
+console.log('llala');
 var webpage = require('webpage')
   , args = require('system').args
   , fs = require('fs')
-	, timestamp = args[1]
-	, urls = args.slice(2)
-	, len = urls.length
+	, campaignId = args[1]
   , currentNum = 0
   , pkg = JSON.parse(fs.read('./package.json'));
 
-function snapshot(url, id) {
+function snapshot(id, url, imagePath) {
   var page = webpage.create()
     , send
     , begin
@@ -21,18 +20,18 @@ function snapshot(url, id) {
     userAgent: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.43 Safari/537.31'
   };
   page.open(url, function (status) {
-    page.render('snapshot/' + timestamp + '/' + id + '.png');
+    page.render('snapshot/' + campaignId + '/' + id + '.png');
     var html = page.content;
     // callback NodeJS
     var data = [
           'html=',
           encodeURIComponent(html),
-          '&timestamp=',
-          timestamp,
+          '&campaignId=',
+          campaignId,
           '&url=',
           encodeURIComponent(url),
           '&image=',
-          encodeURIComponent('http://localhost:' + pkg.port + '/snapshot/' + timestamp + '/' + id + '.png'),
+          encodeURIComponent('http://localhost:' + pkg.port + '/snapshot/' + campaignId + '/' + id + '.png'),
           '&id=',
           id
         ].join('');
@@ -42,19 +41,25 @@ function snapshot(url, id) {
   });
 }
 
-if (len) {
-  var postPage = webpage.create();
-  postPage.customHeaders = {
-    'secret': pkg.secret
-  };
-  postPage.onLoadFinished = function(){
-    if (currentNum++ === len) {
-      postPage.close();
-      phantom.exit();
+var postPage = webpage.create();
+postPage.customHeaders = {
+  'secret': pkg.secret
+};
+postPage.open('http://localhost:' + pkg.port + '/bridge?campaignId=' + campaignId, function () {
+  console.log(postPage.plainText);
+  var urls = JSON.parse(postPage.plainText).urls
+    , len = urls.length;
+
+  if (len) {
+    for (var i = len; i--;) {
+      snapshot(i, urls[i]);
+    }
+
+    postPage.onLoadFinished = function () {
+      if (++currentNum === len) {
+        postPage.close();
+        phantom.exit();
+      }
     }
   }
-
-  for (var i = len; i--;) {
-    snapshot(urls[i], i);
-  }
-}
+});

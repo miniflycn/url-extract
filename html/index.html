@@ -27,7 +27,7 @@ URL10: <input type="text" class="url" /><br />
       if (value !== '') urls.push(value);
     });
     if (urls.length) {
-      $.post('/api', { urls: urls }, function (data) {
+      $.post('/api', { urls: urls, campaignId: 123 }, function (data) {
         results = Array.prototype.concat.apply(results, data.urls);
         var html = "";
         for(var i = results.length; i--;){
