@@ -27,7 +27,7 @@ URL10: <input type="text" class="url" /><br />
       if (value !== '') urls.push(value);
     });
     if (urls.length) {
-      $.post('/api', { urls: urls, campaignId: 123 }, function (data) {
+      $.post('/api', { urls: urls, campaignId: 'akdlsjvieowqjwefr' }, function (data) {
         results = Array.prototype.concat.apply(results, data.urls);
         var html = "";
         for(var i = results.length; i--;){
@@ -47,13 +47,14 @@ URL10: <input type="text" class="url" /><br />
           ].join('');
         }
         $('#result').html(html);
-        if(!data.finished) _next(data.timestamp);
+        if (!data.finished) _next(data.campaignId);
+        if (data.finished) results = [];
       });
     }
   })
 
-  function _next(timestamp) {
-    $.post('/api', { timestamp: timestamp}, function (data) {
+  function _next(campaignId) {
+    $.post('/api', { campaignId: campaignId }, function (data) {
       results = Array.prototype.concat.apply(results, data.urls);
       var html = "";
       for(var i = results.length; i--;){
@@ -73,7 +74,7 @@ URL10: <input type="text" class="url" /><br />
         ].join('');
       }
       $('#result').html(html);
-      if (!data.finished) _next(data.timestamp);
+      if (!data.finished) _next(data.campaignId);
       if (data.finished) results = [];
     });
   }

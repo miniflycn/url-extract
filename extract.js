@@ -21,7 +21,7 @@ module.exports = (function () {
             'snapshot.js',
             campaignId
           ]
-        , imagesPath = 'http://localhost:' + pkg.port + '/snapshot/' + campaignId + '/'
+        , imagesPath = 'snapshot/' + campaignId + '/'
         , urls = []
         , url
         , imagePath;
@@ -35,7 +35,7 @@ module.exports = (function () {
         });
       }
       
-      for (var i = req.body.urls; i--;) {
+      for (var i = req.body.urls.length; i--;) {
         url = req.body.urls[i];
         imagePath = imagesPath + i + '.png';
         _deal(i, url, imagePath);

@@ -1,4 +1,3 @@
-console.log('llala');
 var webpage = require('webpage')
   , args = require('system').args
   , fs = require('fs')
@@ -20,7 +19,7 @@ function snapshot(id, url, imagePath) {
     userAgent: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.43 Safari/537.31'
   };
   page.open(url, function (status) {
-    page.render('snapshot/' + campaignId + '/' + id + '.png');
+    page.render(imagePath);
     var html = page.content;
     // callback NodeJS
     var data = [
@@ -31,7 +30,7 @@ function snapshot(id, url, imagePath) {
           '&url=',
           encodeURIComponent(url),
           '&image=',
-          encodeURIComponent('http://localhost:' + pkg.port + '/snapshot/' + campaignId + '/' + id + '.png'),
+          encodeURIComponent(imagePath),
           '&id=',
           id
         ].join('');
@@ -46,13 +45,14 @@ postPage.customHeaders = {
   'secret': pkg.secret
 };
 postPage.open('http://localhost:' + pkg.port + '/bridge?campaignId=' + campaignId, function () {
-  console.log(postPage.plainText);
   var urls = JSON.parse(postPage.plainText).urls
-    , len = urls.length;
+    , len = urls.length
+    , url;
 
   if (len) {
     for (var i = len; i--;) {
-      snapshot(i, urls[i]);
+      url = urls[i]
+      snapshot(url.id, url.url, url.imagePath);
     }
 
     postPage.onLoadFinished = function () {
