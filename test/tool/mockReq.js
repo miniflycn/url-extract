@@ -1,12 +1,19 @@
-module.exports = function (body) {
-  function Req(body) {
+module.exports = function () {
+  function Req() {
     this.headers = {};
-    this.body = body;
   }
-  Req.prototype.setHeader = function (key, value) {
-    this.headers[key] = value;
-    return this;
-  }
+  Req.prototype = {
+    contructor: Req,
+  	setHeader: function (key, value) {
+      this.headers[key] = value;
+      return this;
+    },
+    setUrl: function (url) {
+      this.url = url;
+      this.originUrl = url;
+      return this;
+    }
+  };
 
-  return (new Req(body));
+  return (new Req());
 };
