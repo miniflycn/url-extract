@@ -29,22 +29,33 @@ URL10: <input type="text" class="url" /><br />
     if (urls.length) {
       $.post('/api', { urls: urls, campaignId: 'akdlsjvieowqjwefr' }, function (data) {
         results = Array.prototype.concat.apply(results, data.urls);
-        var html = "";
+        var html = ""
+          , result;
         for(var i = results.length; i--;){
-          html += [
-            '<h3>',
-            results[i].url,
-            '</h3>',
-            '<p>title: ',
-            results[i].title,
-            '</p><p>description: ',
-            results[i].description,
-            '</p>image: <a href="',
-            results[i].image,
-            '" target="_blank">',
-            results[i].image,
-            '</a></p>'
-          ].join('');
+          result = results[i];
+          if (result.status) {
+            html += [
+              '<h3>',
+              result.url,
+              '</h3>',
+              '<p>title: ',
+              result.title,
+              '</p><p>description: ',
+              result.description,
+              '</p>image: <a href="',
+              result.image,
+              '" target="_blank">',
+              result.image,
+              '</a></p>'
+            ].join('');
+          } else {
+            html += [
+              '<h3>',
+              result.url,
+              '</h3>',
+              '<p>This url may unavailable, please check it and update a new one.</p>'
+            ].join('');
+          }
         }
         $('#result').html(html);
         if (!data.finished) _next(data.campaignId);
@@ -56,22 +67,33 @@ URL10: <input type="text" class="url" /><br />
   function _next(campaignId) {
     $.post('/api', { campaignId: campaignId }, function (data) {
       results = Array.prototype.concat.apply(results, data.urls);
-      var html = "";
+      var html = ""
+        , result;
       for(var i = results.length; i--;){
-        html += [
-          '<h3>',
-          results[i].url,
-          '</h3>',
-          '<p>title: ',
-          results[i].title,
-          '</p><p>description: ',
-          results[i].description,
-          '</p>image: <a href="',
-          results[i].image,
-          '" target="_blank">',
-          results[i].image,
-          '</a></p>'
-        ].join('');
+        result = results[i];
+        if (result.status) {
+          html += [
+            '<h3>',
+            result.url,
+            '</h3>',
+            '<p>title: ',
+            result.title,
+            '</p><p>description: ',
+            result.description,
+            '</p>image: <a href="',
+            result.image,
+            '" target="_blank">',
+            result.image,
+            '</a></p>'
+          ].join('');
+        } else {
+          html += [
+            '<h3>',
+            result.url,
+            '</h3>',
+            '<p>This url may unavailable, please check it and update a new one.</p>'
+          ].join('');
+        }
       }
       $('#result').html(html);
       if (!data.finished) _next(data.campaignId);

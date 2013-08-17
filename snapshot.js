@@ -1,7 +1,7 @@
 var webpage = require('webpage')
   , args = require('system').args
   , fs = require('fs')
-	, campaignId = args[1]
+  , campaignId = args[1]
   , currentNum = 0
   , pkg = JSON.parse(fs.read('./package.json'));
 
@@ -19,22 +19,39 @@ function snapshot(id, url, imagePath) {
     userAgent: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.43 Safari/537.31'
   };
   page.open(url, function (status) {
-    page.render(imagePath);
-    var html = page.content;
-    // callback NodeJS
-    var data = [
-          'html=',
-          encodeURIComponent(html),
-          '&campaignId=',
-          campaignId,
-          '&url=',
-          encodeURIComponent(url),
-          '&image=',
-          encodeURIComponent(imagePath),
-          '&id=',
-          id
-        ].join('');
-    postPage.open('http://localhost:' + pkg.port + '/bridge', 'POST', data, function () {});
+    var data;
+    if (status === 'fail') {
+      data = [
+        'campaignId=',
+        campaignId,
+        '&url=',
+        encodeURIComponent(url),
+        '&id=',
+        id,
+        '&status=',
+        0
+      ].join('');
+      postPage.open('http://localhost:' + pkg.port + '/bridge', 'POST', data, function () {});
+    } else { 
+      page.render(imagePath);
+      var html = page.content;
+      // callback NodeJS
+      data = [
+        'campaignId=',
+        campaignId,
+        '&html=',
+        encodeURIComponent(html),
+        '&url=',
+        encodeURIComponent(url),
+        '&image=',
+        encodeURIComponent(imagePath),
+        '&id=',
+        id,
+        '&status=',
+        1
+      ].join('');
+      postPage.open('http://localhost:' + pkg.port + '/bridge', 'POST', data, function () {});
+    }
     // release the memory
     page.close();
   });
@@ -56,7 +73,7 @@ postPage.open('http://localhost:' + pkg.port + '/bridge?campaignId=' + campaignI
     }
 
     postPage.onLoadFinished = function () {
-      if (++currentNum === len) {
+      if (+currentNum === len) {
         postPage.close();
         phantom.exit();
       }

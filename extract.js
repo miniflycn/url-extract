@@ -8,6 +8,7 @@ module.exports = (function () {
     , pkg = JSON.parse(fs.readFileSync('./package.json'));
 
   var app = connect()
+    .use(connect.logger('dev'))
     .use('/snapshot', connect.static(__dirname + '/snapshot', { maxAge: pkg.maxAge }))
     .use(connect.bodyParser())
     .use('/bridge', bridge)
@@ -21,7 +22,7 @@ module.exports = (function () {
             'snapshot.js',
             campaignId
           ]
-        , imagesPath = 'snapshot/' + campaignId + '/'
+        , imagesPath = './snapshot/' + campaignId + '/'
         , urls = []
         , url
         , imagePath;
@@ -49,6 +50,6 @@ module.exports = (function () {
 
     })
     .use(connect.static(__dirname + '/html', { maxAge: pkg.maxAge }))
-    .listen(pkg.port, function () { console.log('listen: ' + pkg.port); });
+    .listen(pkg.port, function () { console.log('listen: ' + 'http://localhost:' + pkg.port); });
 
 })();
