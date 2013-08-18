@@ -3,6 +3,8 @@ var webpage = require('webpage')
   , fs = require('fs')
   , campaignId = args[1]
   , currentNum = 0
+  , totalNum = 0
+  , shutdown = false
   , pkg = JSON.parse(fs.read('./package.json'));
 
 function snapshot(id, url, imagePath) {
@@ -21,62 +23,78 @@ function snapshot(id, url, imagePath) {
   page.open(url, function (status) {
     var data;
     if (status === 'fail') {
-      data = [
-        'campaignId=',
-        campaignId,
-        '&url=',
-        encodeURIComponent(url),
-        '&id=',
-        id,
-        '&status=',
-        0
-      ].join('');
-      postPage.open('http://localhost:' + pkg.port + '/bridge', 'POST', data, function () {});
+      onFail(campaignId, id, url);
     } else { 
       page.render(imagePath);
       var html = page.content;
       // callback NodeJS
-      data = [
-        'campaignId=',
-        campaignId,
-        '&html=',
-        encodeURIComponent(html),
-        '&url=',
-        encodeURIComponent(url),
-        '&image=',
-        encodeURIComponent(imagePath),
-        '&id=',
-        id,
-        '&status=',
-        1
-      ].join('');
-      postPage.open('http://localhost:' + pkg.port + '/bridge', 'POST', data, function () {});
+      onSuccess(campaignId, id, url, imagePath, html);
     }
     // release the memory
     page.close();
   });
 }
 
-var postPage = webpage.create();
-postPage.customHeaders = {
-  'secret': pkg.secret
-};
-postPage.open('http://localhost:' + pkg.port + '/bridge?campaignId=' + campaignId, function () {
-  var urls = JSON.parse(postPage.plainText).urls
-    , len = urls.length
-    , url;
+function onFail(campaignId, id, url) {
+  var data = {
+    campaignId: campaignId,
+    id: id,
+    url: url,
+    status: 0
+  };
+  websocket.send(JSON.stringify(data));
+}
 
-  if (len) {
-    for (var i = len; i--;) {
-      url = urls[i]
-      snapshot(url.id, url.url, url.imagePath);
-    }
+function onSuccess(campaignId, id, url, imagePath, html) {
+  var data = {
+    campaignId: campaignId,
+    id: id,
+    url, url,
+    imagePath: imagePath,
+    html, html,
+    status: 1
+  };
+  websocket.send(JSON.stringify(data));
+}
 
-    postPage.onLoadFinished = function () {
-      if (+currentNum === len) {
-        postPage.close();
-        phantom.exit();
+function onMessage(data) {
+  data = JSON.parse(data);
+  if (method === 'POST') {
+    var urls = data.urls
+      , len = urls.length
+      , url;
+
+    if (len) {
+      totalNum += len;
+      for (var i = len; i--;) {
+        url = urls[i]
+        snapshot(url.id, url.url, url.imagePath);
       }
     }
+
   }
-});
+}
+
+function createWs() {
+  var websocket = new WebSocket('ws://localhost:/' + pkg.wsPort);
+  websocket.onopen = function(evt){
+    shutdown = false;
+    websocket.send(JSON.stringify({
+      method: 'LOGIN',
+      campaignId: campaignId
+    }));
+  };
+  websocket.onmessage = onMessage;
+  websocket.onerror = function (msg) {
+    console.log(msg);
+  }
+  websocket.onclose = function() {
+    if (!shutdown) {
+      shutdown = ture; 
+      setTimeout(function () {
+        createWs();
+      }, 500);
+    }
+  };
+}
+createWs();

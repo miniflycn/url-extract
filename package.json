@@ -1,5 +1,6 @@
 {
 	"port": 3000,
+	"wsPort": 3001,
 	"maxAge": 3600,
 	"secret": "DDKJSH#@$Y(*@R",
 	"scripts": {
