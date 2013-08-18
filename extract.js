@@ -3,7 +3,6 @@ module.exports = (function () {
   var connect = require('connect')
     , fs = require('fs')
     , ws = require('websocket-server')
-    , child_process = require('child_process')
     , jobMan = require('./lib/jobMan.js')
     , bridge = require('./lib/bridge.js')
     , pkg = JSON.parse(fs.readFileSync('./package.json'));
