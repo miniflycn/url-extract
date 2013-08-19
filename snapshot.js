@@ -5,6 +5,7 @@ var webpage = require('webpage')
   , currentNum = 0
   , totalNum = 0
   , shutdown = false
+  , websocket = null
   , pkg = JSON.parse(fs.read('./package.json'));
 
 function snapshot(id, url, imagePath) {
@@ -43,23 +44,36 @@ function onFail(campaignId, id, url) {
     status: 0
   };
   websocket.send(JSON.stringify(data));
+  if (++currentNum >= totalNum) {
+    websocket.send(JSON.stringify({
+      method: 'DONE'
+    }));
+  }
 }
 
 function onSuccess(campaignId, id, url, imagePath, html) {
   var data = {
-    campaignId: campaignId,
-    id: id,
-    url, url,
-    imagePath: imagePath,
-    html, html,
-    status: 1
+    method: 'POST',
+    data: {
+      campaignId: campaignId,
+      id: id,
+      url: url,
+      imagePath: imagePath,
+      html: html,
+      status: 1
+    }
   };
+  if (++currentNum >= totalNum) {
+    websocket.send(JSON.stringify({
+      method: 'DONE'
+    }));
+  }
   websocket.send(JSON.stringify(data));
 }
 
-function onMessage(data) {
-  data = JSON.parse(data);
-  if (method === 'POST') {
+function onMessage(evt) {
+  data = JSON.parse(evt.data);
+  if (data.method === 'POST') {
     var urls = data.urls
       , len = urls.length
       , url;
@@ -71,12 +85,14 @@ function onMessage(data) {
         snapshot(url.id, url.url, url.imagePath);
       }
     }
-
+  } else if (data.method === 'CLOSE') {
+    phantom.exit();
   }
 }
 
 function createWs() {
-  var websocket = new WebSocket('ws://localhost:/' + pkg.wsPort);
+  // unfortunately websocket will cost more than 1s to open
+  websocket = new WebSocket('ws://localhost:' + pkg.wsPort + '/');
   websocket.onopen = function(evt){
     shutdown = false;
     websocket.send(JSON.stringify({
@@ -90,7 +106,7 @@ function createWs() {
   }
   websocket.onclose = function() {
     if (!shutdown) {
-      shutdown = ture; 
+      shutdown = true; 
       setTimeout(function () {
         createWs();
       }, 500);
