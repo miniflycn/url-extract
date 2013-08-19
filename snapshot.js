@@ -54,6 +54,13 @@ function snapshot(id, url, imagePath) {
     }
     // release the memory
     page.close();
+    // kill child process
+    setTimeout(function () {
+      if (++currentNum === len) {
+        postPage.close();
+        phantom.exit();
+      }
+    }, 500);
   });
 }
 
@@ -63,20 +70,14 @@ postPage.customHeaders = {
 };
 postPage.open('http://localhost:' + pkg.port + '/bridge?campaignId=' + campaignId, function () {
   var urls = JSON.parse(postPage.plainText).urls
-    , len = urls.length
     , url;
+
+  len = urls.length;
 
   if (len) {
     for (var i = len; i--;) {
       url = urls[i]
       snapshot(url.id, url.url, url.imagePath);
-    }
-
-    postPage.onLoadFinished = function () {
-      if (+currentNum === len) {
-        postPage.close();
-        phantom.exit();
-      }
     }
   }
 });
