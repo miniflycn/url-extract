@@ -14,7 +14,14 @@ describe('jobMan', function () {
       data.finished.should.be.true;
       done();
     }), function () {});
-    jobMan.fire(123, 0, 'http://localhost/test', 'http://localhost/test.png', '<html></html>');
+    jobMan.fire({
+      campaignId: 123,
+      id: 0,
+      url: 'http://localhost/test',
+      image: 'http://localhost/test.png',
+      html: '<html></html>',
+      status: 1
+    });
   });
 
   it('should able to pass two url', function (done) {
@@ -23,8 +30,22 @@ describe('jobMan', function () {
       data.urls.length.should.equal(2);
       done();
     }), function () {});
-    jobMan.fire(321, 0, 'http://localhost/test1', 'http://localhost/test1.png', '<html></html>');
-    jobMan.fire(321, 1, 'http://localhost/test2', 'http://localhost/test2.png', '<html></html>');
+    jobMan.fire({
+      campaignId: 321,
+      id: 0,
+      url: 'http://localhost/test1',
+      image: 'http://localhost/test1.png',
+      html: '<html></html>',
+      status: 1
+    });
+    jobMan.fire({
+      campaignId: 321,
+      id: 1,
+      url: 'http://localhost/test2',
+      image: 'http://localhost/test2.png',
+      html: '<html></html>',
+      status: 1
+    });
   });
 
   it('should able to get the url list', function () {
