@@ -86,7 +86,6 @@ var postMan = {
     this.datas.push(data);
     if (!this.posting) {
       this.posting = true;
-      console.log(this.fire);
       this.fire();
     }
   },
