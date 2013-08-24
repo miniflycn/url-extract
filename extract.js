@@ -2,7 +2,7 @@ module.exports = (function () {
   "use strict"
   var connect = require('connect')
     , fs = require('fs')
-    , child_process = require('child_process')
+    , spawn = require('child_process').spawn
     , jobMan = require('./lib/jobMan.js')
     , bridge = require('./lib/bridge.js')
     , pkg = JSON.parse(fs.readFileSync('./package.json'));
@@ -17,11 +17,6 @@ module.exports = (function () {
       if (!req.body.urls || !req.body.urls.length) return jobMan.watch(req.body.campaignId, req, res, next);
 
       var campaignId = req.body.campaignId
-        , commands = [
-            'phantomjs',
-            'snapshot.js',
-            campaignId
-          ]
         , imagesPath = './snapshot/' + campaignId + '/'
         , urls = []
         , url
@@ -43,9 +38,15 @@ module.exports = (function () {
       }
 
       jobMan.register(campaignId, urls, req, res, next);
-      child_process.exec(commands.join(' '), function (err, stdout, stderr) {
-        console.log(stdout);
-        if (err !== null) console.log('exec error: ' + err);
+      var snapshot = spawn('phantomjs', ['snapshot.js', campaignId]);
+      snapshot.stdout.on('data', function (data) {
+        console.log('stdout: ' + data);
+      });
+      snapshot.stderr.on('data', function (data) {
+        console.log('stderr: ' + data);
+      });
+      snapshot.on('close', function (code) {
+        console.log('snapshot exited with code ' + code);
       });
 
     })

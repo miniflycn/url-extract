@@ -2,7 +2,6 @@ var webpage = require('webpage')
   , args = require('system').args
   , fs = require('fs')
   , campaignId = args[1]
-  , currentNum = 0
   , pkg = JSON.parse(fs.read('./package.json'));
 
 function snapshot(id, url, imagePath) {
@@ -50,34 +49,64 @@ function snapshot(id, url, imagePath) {
         '&status=',
         1
       ].join('');
-      postPage.open('http://localhost:' + pkg.port + '/bridge', 'POST', data, function () {});
+      postMan.post(data);
     }
     // release the memory
     page.close();
-    // kill child process
-    setTimeout(function () {
-      if (++currentNum === len) {
-        postPage.close();
-        phantom.exit();
-      }
-    }, 500);
   });
 }
 
-var postPage = webpage.create();
-postPage.customHeaders = {
-  'secret': pkg.secret
-};
-postPage.open('http://localhost:' + pkg.port + '/bridge?campaignId=' + campaignId, function () {
-  var urls = JSON.parse(postPage.plainText).urls
-    , url;
+var postMan = {
+  postPage: null,
+  posting: false,
+  datas: [],
+  len: 0,
+  currentNum: 0,
+  init: function (snapshot) {
+    var postPage = webpage.create();
+    postPage.customHeaders = {
+      'secret': pkg.secret
+    };
+    postPage.open('http://localhost:' + pkg.port + '/bridge?campaignId=' + campaignId, function () {
+      var urls = JSON.parse(postPage.plainText).urls
+        , url;
 
-  len = urls.length;
+      this.len = urls.length;
 
-  if (len) {
-    for (var i = len; i--;) {
-      url = urls[i]
-      snapshot(url.id, url.url, url.imagePath);
+      if (this.len) {
+        for (var i = this.len; i--;) {
+          url = urls[i];
+          snapshot(url.id, url.url, url.imagePath);
+        }
+      }
+    });
+    this.postPage = postPage;
+  },
+  post: function (data) {
+    this.datas.push(data);
+    if (!this.posting) {
+      this.posting = true;
+      console.log(this.fire);
+      this.fire();
+    }
+  },
+  fire: function () {
+    if (this.datas.length) {
+      var data = this.datas.shift()
+        , that = this;
+      this.postPage.open('http://localhost:' + pkg.port + '/bridge', 'POST', data, function () {
+        that.fire();
+        // kill child process
+        setTimeout(function () {
+          if (++this.currentNum === this.len) {
+            that.postPage.close();
+            phantom.exit();
+          }
+        }, 500);
+      });
+    } else {
+      this.posting = false;
     }
   }
-});
+};
+postMan.init(snapshot);
