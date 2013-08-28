@@ -1,7 +1,7 @@
 var webpage = require('webpage')
   , args = require('system').args
   , fs = require('fs')
-  , fetch = require('./lib/fetch.js')
+  , fetch = require('./lib/fetch')
   , id = args[1]
   , currentNum = 0
   , now = 0

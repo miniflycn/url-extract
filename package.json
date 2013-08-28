@@ -3,7 +3,7 @@
 	"wsPort": 3001,
 	"maxAge": 3600,
 	"maxJob": 100,
-	"redis": false,
+	"cache": "object",
 	"scripts": {
 		"test": "mocha"
 	},

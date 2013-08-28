@@ -17,7 +17,7 @@ module.exports = (function () {
       });
     })
   } else {
-    require('./extract.js');
+    require('./extract');
   }
 })();
 
