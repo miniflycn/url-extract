@@ -3,7 +3,7 @@
 	"wsPort": 3001,
 	"maxAge": 3600,
 	"maxJob": 100,
-	"secret": "DDKJSH#@$Y(*@R",
+	"redis": false,
 	"scripts": {
 		"test": "mocha"
 	},
