@@ -1,20 +1,38 @@
 var assert = require('assert')
+  , fs = require('fs')
   , jobMan = require('../lib/jobMan.js')
-  , bridge = require('../lib/bridge.js')
   , mockRes = require('./tool/mockRes.js');
 
-describe('jobMan', function () {
-  it('should response the right data', function (done) {
-    jobMan.register(123, [{
-      id: 0,
-      url: 'http://www.baidu.com',
-      imagePath: 'snapshot/test.png'
-    }], {}, mockRes(function (data) {
-      data = JSON.parse(data)
-      data.urls[0].id.should.equal(0);
-      data.urls[0].url.should.equal('http://www.baidu.com');
-      data.urls[0].status.should.equal(1);
-      done();
-    }), function () {});
+describe('jobMan', function (done) {
+  it('should able to pipe the job to file', function (done) {
+    fs.writeFileSync('./bridge/0.txt', '');
+    fs.writeFileSync('./bridge/1.txt', '');
+    fs.writeFileSync('./bridge/2.txt', '');
+
+    jobMan.register('test', [
+      {
+        campaignId: 'test',
+        url: 'http://localhost/test0',
+        content: 1
+      },
+      {
+        campaignId: 'test',
+        url: 'http://localhost/test1',
+        content: 1
+      },
+      {
+        campaignId: 'test',
+        url: 'http://localhost/test2',
+        content: 1
+      }
+    ]);
+
+    setTimeout(function () {
+      fs.readFile('./bridge/0.txt', { encoding: 'utf-8' }, function (err, data) {
+        data.should.equal('test,http://localhost/test2,1\n');
+        done();
+      });
+    }, 50);
   });
+
 });

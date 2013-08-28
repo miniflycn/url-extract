@@ -2,6 +2,7 @@
 	"port": 3000,
 	"wsPort": 3001,
 	"maxAge": 3600,
+	"maxJob": 100,
 	"secret": "DDKJSH#@$Y(*@R",
 	"scripts": {
 		"test": "mocha"
