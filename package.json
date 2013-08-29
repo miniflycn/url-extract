@@ -1,15 +1,23 @@
 {
-	"port": 3000,
-	"wsPort": 3001,
-	"maxAge": 3600,
-	"maxJob": 100,
-	"cache": "object",
-	"scripts": {
-		"test": "mocha"
-	},
-	"devDependencies": {
-		"mocha": "*",
-		"connect": "*",
-		"should": "*"
-	}
+  "name": "url-extract",
+  "version": "0.0.3",
+  "repository": "miniflycn/url-extract",
+  "files": ["index.js"],
+  "license": "MIT",
+  "dependencies": {
+    "connect": "*",
+    "uid2": "0.0.3"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "port": 3000,
+  "wsPort": 3001,
+  "maxAge": 3600,
+  "maxJob": 100,
+  "cache": "object"
 }

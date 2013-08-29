@@ -5,8 +5,8 @@ var assert = require('assert')
   , pkg = JSON.parse(fs.readFileSync('./package.json'));
 
 describe('cache', function () {
-  it('should able to filter the fetch a url job has done before', function (done) {
-    cache.filter(Job.fetch('http://localhost/test1'), function (job) {
+  it('should able to filter the extract a url job has done before', function (done) {
+    cache.filter(Job.extract('http://localhost/test1'), function (job) {
       job.setData({
         title: 'title',
         description: 'description',
@@ -15,7 +15,7 @@ describe('cache', function () {
       });
       cache.cache(job);
 
-      cache.filter(Job.fetch('http://localhost/test1'), function () {}, function (job) {
+      cache.filter(Job.extract('http://localhost/test1'), function () {}, function (job) {
         job.getData().should.eql({
           title: 'title',
           description: 'description',
@@ -43,8 +43,8 @@ describe('cache', function () {
     }, function () {});
   });
 
-  it('should able to filter the snapshot job when fetch the same url job has done before.', function (done) {
-    cache.filter(Job.fetch('http://localhost/test3'), function (job) {
+  it('should able to filter the snapshot job when extract the same url job has done before.', function (done) {
+    cache.filter(Job.extract('http://localhost/test3'), function (job) {
       job.setData({
         title: 'title',
         description: 'description',
@@ -62,7 +62,7 @@ describe('cache', function () {
     }, function () {});
   });
 
-  it('should not filter the fetch url job unless it get all data', function (done) {
+  it('should not filter the extract url job unless it get all data', function (done) {
     cache.filter(Job.snapshot('http://localhost/test4'), function (job) {
       job.setData({
         image: 'http://localhost/test4.png',
@@ -70,7 +70,7 @@ describe('cache', function () {
       });
       cache.cache(job);
 
-      var job2 = Job.fetch('http://localhost/test4');
+      var job2 = Job.extract('http://localhost/test4');
       cache.filter(job2, function (job) {
         job.should.equal(job2);
         done();

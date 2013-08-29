@@ -77,8 +77,9 @@ function begin(jobs) {
   if (i) {
     for (; i--;) {
       job = jobs[i];
-      imagePath = './snapshot/' + id + '/' + (currentNum++) + '.png';
+      imagePath = './snapshot/' + id + '/' + job.id + '.png';
       doJob(job.id, job.url, imagePath, job.content);
+      currentNum++;
     }
   }
 }
