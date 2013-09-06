@@ -6,7 +6,8 @@
   "license": "MIT",
   "dependencies": {
     "connect": "*",
-    "uid2": "0.0.3"
+    "uid2": "0.0.3",
+    "websocket-server": "git://github.com/miniflycn/node-websocket-server.git"
   },
   "devDependencies": {
     "mocha": "*",
@@ -14,10 +15,5 @@
   },
   "scripts": {
     "test": "mocha"
-  },
-  "port": 3000,
-  "wsPort": 3001,
-  "maxAge": 3600,
-  "maxJob": 100,
-  "cache": "object"
+  }
 }
