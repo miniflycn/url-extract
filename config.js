@@ -1,7 +1,9 @@
 module.exports = {
-  port: 3000,
+  "use strict"
+  // websocket port
   wsPort: 3001,
-  maxAge: 3600,
+  // max job one worker can do
   maxJob: 100,
+  // cache type
   cache: "object"
 };
