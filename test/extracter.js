@@ -37,6 +37,4 @@ describe('extracter', function () {
     });
     _job = extracter.snapshot('http://localhost:7777/test/2');
   });
-
-  it('')
 });
