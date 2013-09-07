@@ -1,4 +1,4 @@
-[![build status](https://secure.travis-ci.org/senchalabs/connect.png)](http://travis-ci.org/senchalabs/connect)
+[![build status](https://secure.travis-ci.org/miniflycn/url-extract.png)](http://travis-ci.org/miniflycn/url-extract)
 # url-extract
 
 Homepage: https://github.com/miniflycn/url-extract
@@ -17,9 +17,16 @@ If that works, you can do next.
 
     $ npm install
 
-## Run
+## Use
 
-    $ node index
+```js
+var uExtract = require('./url-extract');
+uExtract.bind(function (job) {
+	console.log(job);
+});
+uExtract.extract('http://www.google.com');
+uExtract.extract('http://www.nodejs.org');
+```
 
 ## License
 All code inside is licensed under MIT license.
