@@ -55,4 +55,20 @@ describe('Job', function () {
       image: 'http://localhost/test.png'
     });
   });
+
+  it('should able to set status is unavailable', function () {
+    var data = {
+      status: false
+    };
+    var job = Job.snapshot('http://localhost/test');
+    job.setData(data);
+    job.status.should.be.false;
+  });
+
+  it('should able to set callback and get callback', function () {
+    var callback = function () {};
+    var job = Job.snapshot('http://localhost/test');
+    job.setCallback(callback);
+    job.getCallback().should.equal(callback);
+  });
 });

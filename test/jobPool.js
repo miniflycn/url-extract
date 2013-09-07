@@ -28,7 +28,7 @@ describe('jobPool', function () {
       , job2 = Job.extract('http://localhost/test6')
       , jobList;
     jobPool.push([job1, job2]);
-    jobList = jobPool.shift(2);
+    jobList = jobPool.shift(5);
     jobList.length.should.equal(2);
   });
 
