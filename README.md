@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/senchalabs/connect.png)](http://travis-ci.org/senchalabs/connect)
 # url-extract
 
 Homepage: https://github.com/miniflycn/url-extract
