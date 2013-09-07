@@ -1,8 +1,6 @@
 var assert = require('assert')
-  , fs = require('fs')
   , cache = require('../lib/cache/object')
-  , Job = require('../lib/Job')
-  , pkg = JSON.parse(fs.readFileSync('./package.json'));
+  , Job = require('../lib/Job');
 
 describe('cache', function () {
   it('should able to filter the extract a url job has done before', function (done) {
