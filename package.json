@@ -11,10 +11,13 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "blanket": "*"
   },
   "scripts": {
     "test": "mocha",
-    "blanket": { "pattern": "url-extract/lib"}
+    "blanket": {
+      "pattern": "url-extract/lib"
+    }
   }
 }
