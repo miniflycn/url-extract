@@ -9,7 +9,6 @@ var testSever = connect().use('/test', function (req, res, next) {
 
 var _image;
 
-
 function makeSureImage(image, done) {
   if (fs.existsSync(image)) {
     fs.unlinkSync(image);
@@ -71,6 +70,36 @@ describe('extracter', function () {
       job.image.should.equal(_image);
       job.content.should.be.false;
       done();
+    });
+  });
+
+  it('should able to extract more than one url at a time', function (done) {
+    var num = 1;
+    extracter.extract(['http://localhost:7777/test/1', 'http://localhost:7777/test/3'], function (job) {
+      if ((num++) === 2) return done();
+    });
+  });
+
+  it('should able to snapshot more than one url at a time', function (done) {
+    var num = 1;
+    extracter.snapshot(['http://localhost:7777/test/2', 'http://localhost:7777/test/4'], function (job) {
+      if ((num++) === 2) return done();
+    });
+  });
+
+  it('should able to extract more than one url at a time with groupId', function (done) {
+    var num = 1;
+    extracter.extract('test1', ['http://localhost:7777/test/1', 'http://localhost:7777/test/3'], function (job) {
+      job.groupId.should.equal('test1');
+      if ((num++) === 2) return done();
+    });
+  });
+
+  it('should able to snapshot more than one url at a time with groupId', function (done) {
+    var num = 1;
+    extracter.snapshot('test2', ['http://localhost:7777/test/2', 'http://localhost:7777/test/4'], function (job) {
+      job.groupId.should.equal('test2');
+      if ((num++) === 2) return done();
     });
   });
 });
