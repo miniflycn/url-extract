@@ -7,6 +7,8 @@ var testSever = connect().use('/test', function (req, res, next) {
                   res.end('<html><head><title>test</title><meta name="description" content="Just a test." /></head></html>')
                 }).listen(7777);
 
+var _image;
+
 
 function makeSureImage(image, done) {
   if (fs.existsSync(image)) {
@@ -36,5 +38,39 @@ describe('extracter', function () {
       makeSureImage(job.image, done);
     });
     _job = extracter.snapshot('http://localhost:7777/test/2');
+  });
+
+  it('should able to set a callback for a extract url job', function (done) {
+    var _job = extracter.extract('http://localhost:7777/test/3', function (job) {
+      job.id.should.equal(_job.id);
+      job.content.should.be.true;
+      _image = job.image;
+      makeSureImage(job.image, done);
+    });
+  });
+
+  it('should able to cache the same extract url job data', function (done) {
+    var _job = extracter.extract('http://localhost:7777/test/3', function (job) {
+      job.image.should.equal(_image);
+      job.content.should.be.true;
+      done();
+    });
+  });
+
+  it('should able to set a callback for a snapshot url job', function (done) {
+    var _job = extracter.snapshot('http://localhost:7777/test/4', function (job) {
+      job.id.should.equal(_job.id);
+      job.content.should.be.false;
+      _image = job.image;
+      makeSureImage(job.image, done);
+    });
+  });
+
+  it('should able to cache the same snapshot url job data', function (done) {
+    var _job = extracter.snapshot('http://localhost:7777/test/4', function (job) {
+      job.image.should.equal(_image);
+      job.content.should.be.false;
+      done();
+    });
   });
 });

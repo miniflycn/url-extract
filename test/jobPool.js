@@ -39,6 +39,11 @@ describe('jobPool', function () {
       , job4 = Job.extract('http://localhost/test10');
     jobPool.push([job1, job2, job3, job4]);
     jobPool.count().should.equal(4);
-    jobPool.shift(4);
+    jobPool.shift(2);
+    jobPool.shift(2);
+  });
+
+  it('should not get a unknow job', function () {
+    assert.deepEqual(jobPool.get(1234567), null);
   });
 });

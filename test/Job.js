@@ -65,10 +65,11 @@ describe('Job', function () {
     job.status.should.be.false;
   });
 
-  it('should able to set callback and get callback', function () {
+  it('should able to set callback', function () {
     var callback = function () {};
-    var job = Job.snapshot('http://localhost/test');
-    job.setCallback(callback);
-    job.getCallback().should.equal(callback);
+    var job1 = Job.snapshot('http://localhost/test', callback)
+      , job2 = Job.extract('http://localhost/test', callback);
+    job1.callback.should.equal(callback);
+    job2.callback.should.equal(callback);
   });
 });

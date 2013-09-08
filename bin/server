@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+
+var connect = require('connect')
+  , uExtract = require('../');
+
+var app = connect()
+          .use(connect.query())
+          .use(connect.bodyParser())
+          .use('/snapshot', function (req, res, next) {
+            var url = req.body.url || req.query.url;
+            if (url) {
+              uExtract.snapshot(url, function (job) {
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.statuCode = 200;
+                res.end(JSON.stringify(job.getData()));
+              });
+            } else {
+              next();
+            }
+          })
+          .use('/extract', function (req, res, next) {
+            var url = req.body.url || req.query.url;
+            if (url) {
+              uExtract.extract(url, function (job) {
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.statuCode = 200;
+                res.end(JSON.stringify(job.getData()));
+              });
+            } else {
+              next();
+            }
+          })
+          .listen(3000);
