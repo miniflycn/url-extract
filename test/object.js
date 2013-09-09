@@ -1,8 +1,14 @@
 var assert = require('assert')
-  , cache = require('../lib/cache/object')
-  , Job = require('../lib/Job');
+  , Job = require('../lib/Job')
+	, cache = require('../lib/cache/object')();
 
-describe('cache', function () {
+describe('object', function () {
+  it('should able to remove a job', function () {
+    var job = new Job('http://localhost/test');
+    cache.cache(job);
+    cache.remove().should.eql(job.getData());
+  });
+
   it('should able to filter the extract a url job has done before', function (done) {
     cache.filter(new Job('http://localhost/test1', true), function (job) {
       job.setData({
