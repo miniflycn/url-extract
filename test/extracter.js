@@ -1,7 +1,7 @@
 var assert = require('assert')
   , fs = require('fs')
   , connect = require('connect')
-	, extracter = require('../lib/extracter');
+  , extracter = require('../lib/extracter');
 
 var testSever = connect().use('/test', function (req, res, next) {
                   res.end('<html><head><title>test</title><meta name="description" content="Just a test." /></head></html>')
@@ -106,6 +106,21 @@ describe('extracter', function () {
         job.groupId.should.equal('test2');
         if ((num++) === 2) return done();
       }
+    });
+  });
+
+  it('should able to save the snapshot in a specified the path', function (done) {
+    extracter.snapshot('http://localhost:7777/test/5', {
+      image: './snapshot/test/test.png',
+      callback: function (job) {
+        makeSureImage('./snapshot/test/test.png', done);
+      }
+    });
+  });
+
+  it('should able to reset the free worker', function (done) {
+    extracter.reset(1, function () {
+      done();
     });
   });
 });
