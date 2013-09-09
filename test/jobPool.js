@@ -4,9 +4,9 @@ var assert = require('assert')
 
 describe('jobPool', function () {
   it('should able to cache job', function () {
-    var job1 = Job.extract('http://localhost/test1')
-      , job2 = Job.extract('http://localhost/test2')
-      , job3 = Job.extract('http://localhost/test3')
+    var job1 = new Job('http://localhost/test1')
+      , job2 = new Job('http://localhost/test2')
+      , job3 = new Job('http://localhost/test3')
       , jobList;
     jobPool.push(job1);
     jobPool.push(job2);
@@ -16,7 +16,7 @@ describe('jobPool', function () {
   });
 
   it('should able to get a job', function () {
-    var job = Job.extract('http://localhost/test4')
+    var job = new Job('http://localhost/test4')
       , id = job.id;
     jobPool.push(job);
     jobPool.shift(1);
@@ -24,8 +24,8 @@ describe('jobPool', function () {
   });
 
   it('should able to push some jobs at a time', function () {
-    var job1 = Job.extract('http://localhost/test5')
-      , job2 = Job.extract('http://localhost/test6')
+    var job1 = new Job('http://localhost/test5')
+      , job2 = new Job('http://localhost/test6')
       , jobList;
     jobPool.push([job1, job2]);
     jobList = jobPool.shift(5);
@@ -33,10 +33,10 @@ describe('jobPool', function () {
   });
 
   it('should able to count jobs', function () {
-    var job1 = Job.extract('http://localhost/test7')
-      , job2 = Job.extract('http://localhost/test8')
-      , job3 = Job.extract('http://localhost/test9')
-      , job4 = Job.extract('http://localhost/test10');
+    var job1 = new Job('http://localhost/test7')
+      , job2 = new Job('http://localhost/test8')
+      , job3 = new Job('http://localhost/test9')
+      , job4 = new Job('http://localhost/test10');
     jobPool.push([job1, job2, job3, job4]);
     jobPool.count().should.equal(4);
     jobPool.shift(2);

@@ -7,7 +7,7 @@
   "dependencies": {
     "connect": "*",
     "uid2": "0.0.3",
-    "websocket-server": "git://github.com/miniflycn/node-websocket-server.git"
+    "websocket-server": "git+https://github.com/miniflycn/node-websocket-server.git"
   },
   "devDependencies": {
     "mocha": "*",

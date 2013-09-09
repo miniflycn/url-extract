@@ -1,3 +1,6 @@
+install:
+	@npm install
+
 test:
 	@mocha
 
