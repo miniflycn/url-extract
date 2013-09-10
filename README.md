@@ -7,25 +7,72 @@ Homepage: https://github.com/miniflycn/url-extract
 Provide a web server for us extracting url's information.
 
 ## Dependence
-make sure PhantomJS is installed. This module expects the ```phantomjs``` binary to be in PATH somewhere. In other words, type this:
+Make sure PhantomJS is installed. This module expects the ```phantomjs``` binary to be in PATH somewhere and must be greater than 1.9.0. In other words, type this:
 
-    $ phantomjs
+    $ phantomjs -v
     
-If that works, you can do next.
+If it print 1.9.x, you can do next.
 
-## Install
+## Setup
+Setup
 
+    $ npm install url-extract
+
+or
+
+    $ git clone git@github.com:miniflycn/url-extract.git
+    $ cd url-extract
     $ npm install
 
-## Use
+## Useage
 
 ```js
-var uExtract = require('./url-extract');
-uExtract.bind(function (job) {
+var urlExtract = require('url-extract');
+urlExtract.bind(function (job) {
 	console.log(job);
 });
-uExtract.extract('http://www.google.com');
-uExtract.extract('http://www.nodejs.org');
+urlExtract.extract('http://www.google.com');
+urlExtract.extract('http://www.nodejs.org');
+```
+
+## API
+```js
+/**
+ * extract(url, callback)
+ * extract a url information
+ * @param {String} url
+ * @param {Function} callback
+ */
+urlExtract.extract('http://www.baidu.com', function (job) {
+  console.log(job);
+});
+/**
+ * extract(urls, callback)
+ * extract some urls information
+ * @param {Array} urls
+ * @param {Function} callback
+ */
+urlExtract.extract(['http://www.baidu.com', 'http://www.google.com'], function (job) {
+  console.log(job);
+});
+/**
+ * snapshot(url, callback)
+ * snapshot a url information
+ * @param {String} url
+ * @param {Function} callback
+ */
+urlExtract.snapshot('http://www.baidu.com', function (job) {
+  console.log(job);
+});
+/**
+ * snapshot(urls, callback)
+ * snapshot some urls information
+ * @param {Array} urls
+ * @param {Function} callback
+ */
+urlExtract.snapshot(['http://www.baidu.com', 'http://www.google.com'], function (job) {
+  console.log(job);
+});
 ```
 
 ## License
