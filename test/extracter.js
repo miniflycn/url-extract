@@ -24,7 +24,7 @@ describe('extracter', function () {
       job.id.should.equal(_job.id);
       job.title.should.equal('test');
       job.description.should.equal('Just a test.');
-      makeSureImage(job.image, done)
+      makeSureImage(job.image, done);
     });
     _job = extracter.extract('http://localhost:7777/test/1');
   });
