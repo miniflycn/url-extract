@@ -1,8 +1,20 @@
 {
   "name": "url-extract",
-  "version": "0.0.3",
-  "repository": "miniflycn/url-extract",
-  "files": ["index.js"],
+  "version": "0.0.4",
+  "description": "Snapshot & extract url library",
+  "keywords": [
+    "snapshot",
+    "extract",
+    "url",
+    "library",
+    "phantomjs"
+  ],
+  "repository": "git://github.com/miniflycn/url-extract.git",
+  "author": "Daniel Yang <miniflycn@gmail.com>",
+  "main": "index",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
   "license": "MIT",
   "dependencies": {
     "connect": "*",
