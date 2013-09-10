@@ -46,4 +46,10 @@ describe('jobPool', function () {
   it('should not get a unknow job', function () {
     assert.deepEqual(jobPool.get(1234567), null);
   });
+
+  it('should able to remove job', function () {
+    var job = new Job('http://localhost/test11');
+    jobPool.push(job);
+    jobPool.remove(job.id).should.equal(job);
+  });
 });
