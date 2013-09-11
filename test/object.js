@@ -23,7 +23,8 @@ describe('object', function () {
         job.getData().should.eql({
           title: 'title',
           description: 'description',
-          image: 'http://localhost/test1.png'
+          image: 'http://localhost/test1.png',
+          status: true
         });
         done();
       });
@@ -40,7 +41,8 @@ describe('object', function () {
 
       cache.filter(new Job('http://localhost/test2', false), function () {}, function (job) {
         job.getData().should.eql({
-          image: 'http://localhost/test2.png'
+          image: 'http://localhost/test2.png',
+          status: true
         });
         done();
       });
@@ -59,7 +61,8 @@ describe('object', function () {
 
       cache.filter(new Job('http://localhost/test3', false), function () {}, function (job) {
         job.getData().should.eql({
-          image: 'http://localhost/test3.png'
+          image: 'http://localhost/test3.png',
+          status: true
         });
         done();
       })

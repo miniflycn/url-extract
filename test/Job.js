@@ -40,7 +40,8 @@ describe('Job', function () {
     job.getData().should.eql({
       title: 'title',
       description: 'description',
-      image: 'http://localhost/test.png'
+      image: 'http://localhost/test.png',
+      status: true
     });
   });
 
@@ -52,7 +53,8 @@ describe('Job', function () {
     var job = new Job('http://localhost/test', false);
     job.setData(data);
     job.getData().should.eql({
-      image: 'http://localhost/test.png'
+      image: 'http://localhost/test.png',
+      status: true
     });
   });
 
