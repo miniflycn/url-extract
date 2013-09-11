@@ -1,7 +1,8 @@
 var assert = require('assert')
   , fs = require('fs')
   , connect = require('connect')
-  , extracter = require('../lib/extracter');
+  , extracter = require('../lib/extracter')
+  , config = require('../config');
 
 var testSever = connect().use('/test', function (req, res, next) {
                   res.end('<html><head><title>test</title><meta name="description" content="Just a test." /></head></html>')
@@ -120,6 +121,16 @@ describe('extracter', function () {
 
   it('should able to reset the free worker', function (done) {
     extracter.reset(1, function () {
+      done();
+    });
+  });
+
+  it('should able to reset the free worker', function (done) {
+    var maxQueueJob = config.maxQueueJob;
+    config.maxQueueJob = 0;
+    extracter.snapshot('http://localhost:7777/test/6', function (job) {
+      job.status.should.be.false;
+      config.maxQueueJob = maxQueueJob;
       done();
     });
   });

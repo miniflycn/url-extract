@@ -94,4 +94,9 @@ describe('Job', function () {
     var job = new Job('http://localhost/test');
     job.setTime().should.equal(job.getTime());
   });
+
+  it('should able to set the status', function () {
+    var job = new Job('http://localhost/test');
+    job.fail().status.should.be.false;
+  });
 });
