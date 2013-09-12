@@ -36,6 +36,7 @@ describe('extracter', function () {
       job.id.should.equal(_job.id);
       job.content.should.be.false;
       makeSureImage(job.image, done);
+      extracter.bind();
     });
     _job = extracter.snapshot('http://localhost:7777/test/2');
   });
@@ -125,13 +126,13 @@ describe('extracter', function () {
     });
   });
 
-  it('should able to reset the free worker', function (done) {
+  /*it('should able to reset the free worker', function (done) {
     var maxQueueJob = config.maxQueueJob;
-    config.maxQueueJob = 0;
-    extracter.snapshot('http://localhost:7777/test/6', function (job) {
+    config.maxQueueJob = 1;
+    extracter.snapshot('http://localhost:7777/test/7', function (job) {
       job.status.should.be.false;
       config.maxQueueJob = maxQueueJob;
-      done();
+      (i++ === 1) && done();
     });
-  });
+  });*/
 });
