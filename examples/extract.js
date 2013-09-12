@@ -1,11 +1,10 @@
 module.exports = (function () {
   "use strict"
-  var uExtract = require('../');
+  var urlExtract = require('../');
 
-  uExtract.bind(function (job) {
-    console.log('This is a extract example.');
+  urlExtract.extract('http://www.baidu.com', function (job) {
+  	console.log('This is a extract example.');
     console.log(job);
     process.exit();
   });
-  uExtract.extract('http://www.baidu.com');
 })();
