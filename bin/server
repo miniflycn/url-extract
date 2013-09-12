@@ -33,10 +33,13 @@ var app = connect()
           })
           .use(connect.static(process.cwd()))
           .use(function (req, res, next) {
+            res.writeHead(200, {'Content-Type': 'text/plain; charset=UTF-8'});
             res.end([
               'Want to create a Snapshot job, you can type: http://localhost:3000/snapshot?url=http://www.google.com\n',
-              'You can also create a Extract url job, please type: http://localhost:3000/extract?url=http://www.google.com'
-            ].join(''))
+              'You can also create a Extract url job, please type: http://localhost:3000/extract?url=http://www.google.com\n',
+              '想要创建一个快照工作，你可以键入：http://localhost:3000/snapshot?url=http://www.google.com\n',
+              '如果想要创建一个抓取页面的信息，请输入：http://localhost:3000/extract?url=http://www.google.com\n'
+            ].join(''));
           })
           .listen(3000, function () {
             console.log('Listen on port 3000');
