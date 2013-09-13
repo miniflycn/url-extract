@@ -21,5 +21,5 @@ describe('fetch', function () {
         }, 30, 20)
       , job = new Job('http://localhost/test3');
     timer.push([job]);
-  })
+  });
 });
