@@ -74,6 +74,8 @@ urlExtract.snapshot(['http://www.baidu.com', 'http://www.google.com'], function 
   console.log(job);
 });
 ```
+## Examples
+* https://github.com/miniflycn/url-extract-server-example
 
 ## License
 All code inside is licensed under MIT license.
@@ -156,6 +158,14 @@ urlExtract.snapshot(['http://www.baidu.com', 'http://www.google.com'], function 
   console.log(job);
 });
 ```
+## 例子
+* https://github.com/miniflycn/url-extract-server-example
 
 ## License
 All code inside is licensed under MIT license.
+
+## TODO
+* 支持自定义屏幕大小，截图大小
+* 工作路径配置文件
+* Redis & Memcached 缓存支持
+* Title & Description 抓取算法支持
