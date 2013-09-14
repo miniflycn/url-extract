@@ -2,7 +2,7 @@ var assert = require('assert')
   , fs = require('fs')
   , connect = require('connect')
   , extracter = require('../lib/extracter')
-  , config = require('../config');
+  , bridge = require('../lib/bridge');
 
 var testSever = connect().use('/test', function (req, res, next) {
                   res.end('<html><head><title>test</title><meta name="description" content="Just a test." /></head></html>')
@@ -120,9 +120,15 @@ describe('extracter', function () {
     });
   });
 
-  it('should able to reset the free worker', function (done) {
-    extracter.reset(1, function () {
-      done();
+  it('should able to set maxJob param & reset the free worker', function (done) {
+    bridge.once('get', function (connectionId, num) {
+      num.should.equal(50);
+      extracter.reset(1, function () {
+        done();
+      });
+    });
+    extracter.opt({
+      maxJob: 50
     });
   });
 
