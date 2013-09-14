@@ -24,12 +24,16 @@
     "mocha": "*",
     "should": "*",
     "connect": "*",
-    "blanket": "*"
+    "blanket": "*",
+    "travis-cov": "*"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "mocha -R travis-cov",
     "blanket": {
       "pattern": "url-extract/lib"
+    },
+    "travis-cov": {
+      "threshold": 80
     }
   }
 }
