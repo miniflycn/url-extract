@@ -4,14 +4,14 @@ var assert = require('assert')
 
 describe('config', function () {
   it('should able to tell changed or not', function () {
-    var maxJob = config.get().maxJob;
+    var zoomFactor = config.get().zoomFactor;
     config.changed().should.be.false;
     config.set({
-      maxJob: 50
+      zoomFactor: 0.5
     });
     config.changed().should.be.true;
     config.set({
-      maxJob: maxJob
+      zoomFactor: zoomFactor
     });
   })
 
@@ -32,14 +32,14 @@ describe('config', function () {
   });
 
   it('should able to set a param', function () {
-    var maxJob = config.get().maxJob;
+    var zoomFactor = config.get().zoomFactor;
     config.set({
-      maxJob: 50
+      zoomFactor: 0.5
     });
-    config.get().maxJob.should.equal(50);
+    config.get().zoomFactor.should.equal(0.5);
     config.set({
-      maxJob: maxJob
+      zoomFactor: zoomFactor
     });
-    config.get().maxJob.should.equal(maxJob);
+    config.get().zoomFactor.should.equal(zoomFactor);
   });
 });

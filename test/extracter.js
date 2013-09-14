@@ -121,13 +121,12 @@ describe('extracter', function () {
   });
 
   it('should able to set maxJob param & reset the free worker', function (done) {
-    function onGet(connectionId, num) {
-      (num === 50) && bridge.off('get', onGet);
+    bridge.once('get', function (connectionId, num) {
+      num.should.equal(50);
       extracter.reset(1, function () {
         done();
       });
-    }
-    bridge.on('get', onGet);
+    });
     extracter.opt({
       maxJob: 50
     });
