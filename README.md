@@ -56,6 +56,26 @@ urlExtract.extract(['http://www.baidu.com', 'http://www.google.com'], function (
   console.log(job);
 });
 /**
+ * extract(url[s], opt)
+ * extract a/some urls information
+ * @param {String} url
+ * @param {Array} urls
+ * @param {Function} opt
+ * @option {String} id
+ * @option {String} image
+ * @option {Boolean} ignoreCache
+ * @option {Function} callback
+ */
+urlExtract.extract('http://www.baidu.com', {
+  id: 'test',
+  image: './snapshot/test/1.png',
+  ignoreCache: true,
+  callback: function (job) {
+    console.log(job);
+  }
+});
+
+/**
  * snapshot(url, callback)
  * snapshot a url
  * @param {String} url
@@ -72,6 +92,25 @@ urlExtract.snapshot('http://www.baidu.com', function (job) {
  */
 urlExtract.snapshot(['http://www.baidu.com', 'http://www.google.com'], function (job) {
   console.log(job);
+});
+/**
+ * snapshot(url[s], opt)
+ * snapshot a/some urls
+ * @param {String} url
+ * @param {Array} urls
+ * @param {Function} opt
+ * @option {String} id
+ * @option {String} image
+ * @option {Boolean} ignoreCache
+ * @option {Function} callback
+ */
+urlExtract.snapshot('http://www.baidu.com', {
+  id: 'test',
+  image: './snapshot/test/1.png',
+  ignoreCache: true,
+  callback: function (job) {
+    console.log(job);
+  }
 });
 ```
 ## Examples
@@ -140,6 +179,26 @@ urlExtract.extract(['http://www.baidu.com', 'http://www.google.com'], function (
   console.log(job);
 });
 /**
+ * extract(url[s], opt)
+ * 抓取单（多）个url信息
+ * @param {String} url
+ * @param {Array} urls
+ * @param {Function} opt
+ * @option {String} id
+ * @option {String} image
+ * @option {Boolean} ignoreCache
+ * @option {Function} callback
+ */
+urlExtract.extract('http://www.baidu.com', {
+  id: 'test',
+  image: './snapshot/test/1.png',
+  ignoreCache: true,
+  callback: function (job) {
+    console.log(job);
+  }
+});
+
+/**
  * snapshot(url, callback)
  * 根据单个url截取快照
  * @param {String} url
@@ -156,6 +215,25 @@ urlExtract.snapshot('http://www.baidu.com', function (job) {
  */
 urlExtract.snapshot(['http://www.baidu.com', 'http://www.google.com'], function (job) {
   console.log(job);
+});
+/**
+ * snapshot(url[s], opt)
+ * 根据单（多）个url截取快照
+ * @param {String} url
+ * @param {Array} urls
+ * @param {Function} opt
+ * @option {String} id
+ * @option {String} image
+ * @option {Boolean} ignoreCache
+ * @option {Function} callback
+ */
+urlExtract.snapshot('http://www.baidu.com', {
+  id: 'test',
+  image: './snapshot/test/1.png',
+  ignoreCache: true,
+  callback: function (job) {
+    console.log(job);
+  }
 });
 ```
 ## 例子
