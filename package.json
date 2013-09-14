@@ -28,7 +28,7 @@
     "travis-cov": "*"
   },
   "scripts": {
-    "test": "mocha -R travis-cov",
+    "test": "mocha --require blanket -R travis-cov",
     "blanket": {
       "pattern": "url-extract/lib"
     },
