@@ -5,7 +5,7 @@ var assert = require('assert')
 describe('config', function () {
   it('should able to tell changed or not', function () {
     var zoomFactor = config.get().zoomFactor;
-    config.changed().should.be.false;
+    config.changed(false).should.be.false;
     config.set({
       zoomFactor: 0.5
     });
@@ -13,7 +13,7 @@ describe('config', function () {
     config.set({
       zoomFactor: zoomFactor
     });
-  })
+  });
 
   it('should able to get config', function () {
     config.get().should.equal(configObj);
