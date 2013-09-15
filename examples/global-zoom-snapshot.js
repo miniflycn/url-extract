@@ -1,9 +1,7 @@
 module.exports = (function () {
   "use strict"
-  var urlExtract = require('../');
-
-  urlExtract.opt({
-  	viewportSize: {
+  var urlExtract = require('../')({
+    viewportSize: {
       width: 512, 
       height: 300
     },
@@ -15,6 +13,7 @@ module.exports = (function () {
     },
     zoomFactor: 0.5
   });
+
   urlExtract.snapshot('http://www.baidu.com', function (job) {
     console.log('This is a snapshot example.');
     console.log(job);

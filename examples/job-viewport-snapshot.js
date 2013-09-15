@@ -1,6 +1,6 @@
 module.exports = (function () {
   "use strict"
-  var urlExtract = require('../');
+  var urlExtract = require('../')();
 
   urlExtract.snapshot('http://www.baidu.com', {
     viewportSize: {

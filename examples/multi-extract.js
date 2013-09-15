@@ -1,6 +1,6 @@
 module.exports = (function () {
   "use strict"
-  var urlExtract = require('../')
+  var urlExtract = require('../')()
     , i = 1;
 
   urlExtract.extract(['http://www.baidu.com', 'http://www.qq.com', 'http://www.sina.com'], function (job) {

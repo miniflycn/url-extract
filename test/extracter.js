@@ -1,7 +1,7 @@
 var assert = require('assert')
   , fs = require('fs')
   , connect = require('connect')
-  , extracter = require('../lib/extracter')
+  , extracter = require('../lib/extracter')()
   , bridge = require('../lib/bridge');
 
 var testSever = connect().use('/test', function (req, res, next) {

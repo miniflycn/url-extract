@@ -23,7 +23,7 @@ Setup
 ## Useage
 
 ```js
-var urlExtract = require('url-extract');
+var urlExtract = require('url-extract')();
 urlExtract.extract('http://www.google.com', function (job) {
   console.log(job);
 });
@@ -139,7 +139,7 @@ All code inside is licensed under MIT license.
 ## 使用
 
 ```js
-var urlExtract = require('url-extract');
+var urlExtract = require('url-extract')();
 // 抓取http://www.google.com的信息，并返回
 urlExtract.extract('http://www.google.com', function (job) {
   console.log(job);
@@ -236,6 +236,6 @@ All code inside is licensed under MIT license.
 
 ## TODO
 * 支持自定义屏幕大小，截图大小
-* 工作路径配置文件
+* 支持模块初始化传参
 * Redis & Memcached 缓存支持
 * Title & Description 抓取算法支持
