@@ -17,11 +17,6 @@ Setup
 
     $ npm install url-extract
 
-or
-
-    $ git clone git@github.com:miniflycn/url-extract.git
-    $ cd url-extract
-    $ npm install
 
 ## Useage
 
@@ -138,11 +133,6 @@ All code inside is licensed under MIT license.
 
     $ npm install url-extract
 
-或者
-
-    $ git clone git@github.com:miniflycn/url-extract.git
-    $ cd url-extract
-    $ npm install
 
 ## 使用
 
