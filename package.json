@@ -25,7 +25,9 @@
     "should": "*",
     "connect": "*",
     "blanket": "*",
-    "travis-cov": "*"
+    "travis-cov": "*",
+    "coveralls": "*",
+    "mocha-lcov-reporter": "*"
   },
   "scripts": {
     "test": "mocha --require blanket -R travis-cov",
