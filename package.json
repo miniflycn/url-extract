@@ -25,17 +25,13 @@
     "should": "*",
     "connect": "*",
     "blanket": "*",
-    "travis-cov": "*",
     "coveralls": "*",
     "mocha-lcov-reporter": "*"
   },
   "scripts": {
-    "test": "mocha --require blanket -R travis-cov",
+    "test": "make test-coveralls",
     "blanket": {
       "pattern": "url-extract/lib"
-    },
-    "travis-cov": {
-      "threshold": 80
     }
   }
 }

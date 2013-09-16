@@ -4,4 +4,3 @@ node_js:
   - "0.8"
 before_script:
   - phantomjs --version
-script: make test-coveralls

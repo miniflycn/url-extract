@@ -9,6 +9,7 @@ test-cov:
 	@echo Please open coverage.html to see the result!
 
 test-coveralls:
+	@mocha
 	@mocha --require blanket --reporter mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
 	@rm -rf lib-cov
 
