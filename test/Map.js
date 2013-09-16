@@ -66,8 +66,14 @@ describe('Map', function () {
 
   it('should able to judge if it contains a value', function () {
     var map = new Map();
-    map.set('test', 'text');
-    map.contains('text').should.be.true;
-    map.contains('test').should.be.false;
+    map.set('test1', 'text1');
+    map.set('test2', false);
+    map.set('test3', 0);
+    map.set('test4', undefined);
+    map.contains('text1').should.be.true;
+    map.contains('test1').should.be.false;
+    map.contains(false).should.be.true;
+    map.contains(0).should.be.true;
+    map.contains(undefined).should.be.true;
   });
 });
