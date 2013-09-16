@@ -29,7 +29,7 @@
     "mocha-lcov-reporter": "*"
   },
   "scripts": {
-    "test": "make test-coveralls",
+    "test": "mocha",
     "blanket": {
       "pattern": "url-extract/lib"
     }
