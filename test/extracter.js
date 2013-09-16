@@ -140,4 +140,16 @@ describe('extracter', function () {
     });
     _job.should.be.false;
   });
+
+  it('should throw a error when try to initializ url-extract more than one time', function () {
+    (function () {
+      require('../lib/extracter')({
+        maxJob: 50
+      });
+    }).should.throwError(/^Sorry.*/);
+  });
+
+  it('should able to get url-extract module', function () {
+    require('../lib/extracter')().should.equal(extracter);
+  })
 });

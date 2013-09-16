@@ -62,6 +62,9 @@ urlExtract.extract(['http://www.baidu.com', 'http://www.google.com'], function (
  * @option {String} id
  * @option {String} image
  * @option {Boolean} ignoreCache
+ * @option {Object} viewportSize
+ * @option {Object} clipRect
+ * @option {Number} zoomFactor
  * @option {Function} callback
  */
 urlExtract.extract('http://www.baidu.com', {
@@ -100,6 +103,9 @@ urlExtract.snapshot(['http://www.baidu.com', 'http://www.google.com'], function 
  * @option {String} id
  * @option {String} image
  * @option {Boolean} ignoreCache
+ * @option {Object} viewportSize
+ * @option {Object} clipRect
+ * @option {Number} zoomFactor
  * @option {Function} callback
  */
 urlExtract.snapshot('http://www.baidu.com', {
@@ -180,6 +186,9 @@ urlExtract.extract(['http://www.baidu.com', 'http://www.google.com'], function (
  * @option {String} id
  * @option {String} image
  * @option {Boolean} ignoreCache
+ * @option {Object} viewportSize
+ * @option {Object} clipRect
+ * @option {Number} zoomFactor
  * @option {Function} callback
  */
 urlExtract.extract('http://www.baidu.com', {
@@ -218,6 +227,9 @@ urlExtract.snapshot(['http://www.baidu.com', 'http://www.google.com'], function 
  * @option {String} id
  * @option {String} image
  * @option {Boolean} ignoreCache
+ * @option {Object} viewportSize
+ * @option {Object} clipRect
+ * @option {Number} zoomFactor
  * @option {Function} callback
  */
 urlExtract.snapshot('http://www.baidu.com', {
