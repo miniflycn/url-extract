@@ -15,6 +15,8 @@ function makeSureImage(image, done) {
     fs.unlinkSync(image);
     fs.rmdirSync(image.slice(0, image.lastIndexOf('/') + 1));
     done && done();
+  } else {
+    throw new Error('Image is not existed');
   }
 }
 
@@ -151,5 +153,24 @@ describe('extracter', function () {
 
   it('should able to get url-extract module', function () {
     require('../lib/extracter')().should.equal(extracter);
-  })
+  });
+
+  it('should able to copy snapshot when it has done before', function (done) {
+    var image;
+
+    if (!fs.existsSync('./snapshot/test')) {
+      fs.mkdirSync('./snapshot/test');
+    }
+
+    extracter.snapshot('http://localhost:7777/test/6', function (job) {
+      image = job.image;
+      extracter.snapshot('http://localhost:7777/test/6', {
+        image: './snapshot/test/test.png',
+        callback: function (job) {
+          makeSureImage(image);
+          makeSureImage('./snapshot/test/test.png', done);
+        }
+      });
+    });
+  });
 });
