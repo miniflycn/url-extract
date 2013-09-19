@@ -10,11 +10,6 @@ module.exports = {
     width: 1024, 
     height: 600 
   },
-  clipRect: {
-    top: 0, 
-    left: 0, 
-    width: 1024, 
-    height: 600 
-  },
+  clipRect: 0,
   zoomFactor: 0
 };
