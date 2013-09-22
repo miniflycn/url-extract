@@ -118,6 +118,7 @@ urlExtract.snapshot('http://www.baidu.com', {
 });
 ```
 ## Examples
+* https://github.com/miniflycn/url-extract/tree/master/examples
 * https://github.com/miniflycn/url-extract-server-example
 
 ## License
@@ -242,6 +243,7 @@ urlExtract.snapshot('http://www.baidu.com', {
 });
 ```
 ## 例子
+* https://github.com/miniflycn/url-extract/tree/master/examples
 * https://github.com/miniflycn/url-extract-server-example
 
 ## License
