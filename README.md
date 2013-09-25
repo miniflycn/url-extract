@@ -116,6 +116,13 @@ urlExtract.snapshot('http://www.baidu.com', {
     console.log(job);
   }
 });
+/**
+ * snapshot(url, image)
+ * snapshot without callback
+ * @param {String} url
+ * @param {String} image
+ */
+urlExtract.snapshot('http://www.baidu.com', './snapshot/baidu.png');
 ```
 ## Examples
 * https://github.com/miniflycn/url-extract/tree/master/examples
@@ -241,6 +248,13 @@ urlExtract.snapshot('http://www.baidu.com', {
     console.log(job);
   }
 });
+/**
+ * snapshot(url, image)
+ * 指定图片地址，无需回调截取快照
+ * @param {String} url
+ * @param {String} image
+ */
+urlExtract.snapshot('http://www.baidu.com', './snapshot/baidu.png');
 ```
 ## 例子
 * https://github.com/miniflycn/url-extract/tree/master/examples
