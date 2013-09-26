@@ -52,4 +52,22 @@ describe('jobPool', function () {
     jobPool.push(job);
     jobPool.remove(job.id).should.equal(job);
   });
+
+  it('should able to unshift job', function () {
+    var job = new Job('http://localhost/test12');
+    jobPool.unshift(job);
+    jobPool.shift(1)[0].should.equal(job);
+  });
+
+  it('should able to make a job in the top of stack', function () {
+    var job1 = new Job('http://localhost/test13')
+      , job2 = new Job('http://localhost/test14')
+      , job3 = new Job('http://localhost/test15');
+    jobPool.push(job1);
+    jobPool.push(job2);
+    jobPool.push(job3);
+    jobPool.quick(job3.id);
+    jobPool.shift(1)[0].should.equal(job3);
+    jobPool.shift(2);
+  });
 });
