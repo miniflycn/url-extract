@@ -264,7 +264,4 @@ urlExtract.snapshot('http://www.baidu.com', './snapshot/baidu.png');
 All code inside is licensed under MIT license.
 
 ## TODO
-* 支持自定义屏幕大小，截图大小
-* 支持模块初始化传参
-* Redis & Memcached 缓存支持
-* Title & Description 抓取算法支持
+* 将该项目拆分成vaild、snapshot、summary
