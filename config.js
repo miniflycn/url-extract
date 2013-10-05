@@ -4,7 +4,7 @@ module.exports = {
   cache: 'object',
 
   maxJob: 100,
-  maxQueueJob: 400,
+  maxQueueJob: 0,
   maxCache: 10000,
   viewportSize: { 
     width: 1024, 
