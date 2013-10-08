@@ -1,6 +1,6 @@
 {
   "name": "url-extract",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Snapshot & extract url library",
   "keywords": [
     "snapshot",
@@ -10,6 +10,7 @@
     "library",
     "phantomjs"
   ],
+  "homepage": "http://miniflycn.github.io/url-extract",
   "repository": "git://github.com/miniflycn/url-extract.git",
   "author": "Daniel Yang <miniflycn@gmail.com>",
   "main": "index",
