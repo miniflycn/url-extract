@@ -11,9 +11,9 @@ describe('Map', function () {
 
   it('should able to get the item number', function () {
     var map = new Map();
-    map.count().should.equal(0);
+    map.length.should.equal(0);
     map.set('test', 'text');
-    map.count().should.equal(1);
+    map.length.should.equal(1);
   });
 
   it('should able to judge key exists or not', function () {
@@ -59,9 +59,9 @@ describe('Map', function () {
   it('should able to clear', function () {
     var map = new Map();
     map.set('test', 'text');
-    map.count().should.equal(1);
+    map.length.should.equal(1);
     map.clear();
-    map.count().should.equal(0);
+    map.length.should.equal(0);
   });
 
   it('should able to judge if it contains a value', function () {
