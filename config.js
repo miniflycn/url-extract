@@ -11,5 +11,6 @@ module.exports = {
     height: 600 
   },
   clipRect: 0,
-  zoomFactor: 0
+  zoomFactor: 0,
+  javascriptEnabled: false
 };
