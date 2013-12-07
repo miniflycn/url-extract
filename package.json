@@ -28,7 +28,8 @@
     "connect": "*",
     "blanket": "*",
     "coveralls": "*",
-    "mocha-lcov-reporter": "*"
+    "mocha-lcov-reporter": "*",
+    "debug": "*"
   },
   "scripts": {
     "test": "mocha",
