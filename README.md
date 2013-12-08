@@ -6,7 +6,7 @@
 Homepage(主页): http://miniflycn.github.io/url-extract
 
 ## Contributors
-https://github.com/skyhacker2/url-extract/graphs/contributors
+https://github.com/miniflycn/url-extract/graphs/contributors
 
 
 ## License
