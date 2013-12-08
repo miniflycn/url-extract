@@ -59,10 +59,19 @@ describe('jobPool', function () {
     jobPool.shift(1)[0].should.equal(job);
   });
 
-  it('should able to make a job in the top of stack', function () {
+  it('should able to unshift some job', function () {
     var job1 = new Job('http://localhost/test13')
       , job2 = new Job('http://localhost/test14')
       , job3 = new Job('http://localhost/test15');
+    jobPool.unshift([job1, job2, job3]);
+    jobPool.count().should.equal(3);
+    jobPool.shift(3);
+  });
+
+  it('should able to make a job in the top of stack', function () {
+    var job1 = new Job('http://localhost/test16')
+      , job2 = new Job('http://localhost/test17')
+      , job3 = new Job('http://localhost/test18');
     jobPool.push(job1);
     jobPool.push(job2);
     jobPool.push(job3);
