@@ -33,7 +33,6 @@
   },
   "scripts": {
     "test": "mocha",
-    "postinstall": "node install.js",
     "blanket": {
       "pattern": "url-extract/lib"
     }
