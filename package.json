@@ -1,6 +1,6 @@
 {
   "name": "url-extract",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Snapshot & extract url library",
   "keywords": [
     "snapshot",
@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "uid2": "0.0.3",
-    "url-download": "0.0.2",
+    "url-download": "0.0.3",
     "adm-zip": "*"
   },
   "devDependencies": {
