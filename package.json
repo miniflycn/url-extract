@@ -20,8 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "uid2": "0.0.3",
-    "url-download": "0.0.3",
-    "adm-zip": "*"
+    "node-websocket-server": "0.0.1"
   },
   "devDependencies": {
     "mocha": "*",
