@@ -1,6 +1,6 @@
 {
   "name": "url-extract",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Snapshot & extract url library",
   "keywords": [
     "snapshot",
@@ -20,7 +20,8 @@
   "license": "MIT",
   "dependencies": {
     "uid2": "0.0.3",
-    "websocket-server": "git+https://github.com/miniflycn/node-websocket-server.git"
+    "url-download": "0.0.2",
+    "adm-zip": "*"
   },
   "devDependencies": {
     "mocha": "*",
@@ -33,6 +34,7 @@
   },
   "scripts": {
     "test": "mocha",
+    "postinstall": "node install.js",
     "blanket": {
       "pattern": "url-extract/lib"
     }
