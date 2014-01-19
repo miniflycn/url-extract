@@ -32,7 +32,9 @@
     "debug": "*"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "mocha"
+  },
+  "config": {
     "blanket": {
       "pattern": "url-extract/lib"
     }
