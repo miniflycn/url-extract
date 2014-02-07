@@ -52,28 +52,12 @@ describe('extracter', function () {
     });
   });
 
-  it('should able to cache the same extract url job data', function (done) {
-    var _job = extracter.extract('http://localhost:7777/test/3', function (job) {
-      job.image.should.equal(_image);
-      job.content.should.be.true;
-      done();
-    });
-  });
-
   it('should able to set a callback for a snapshot url job', function (done) {
     var _job = extracter.snapshot('http://localhost:7777/test/4', function (job) {
       job.id.should.equal(_job.id);
       job.content.should.be.false;
       _image = job.image;
       makeSureImage(job.image, done);
-    });
-  });
-
-  it('should able to cache the same snapshot url job data', function (done) {
-    var _job = extracter.snapshot('http://localhost:7777/test/4', function (job) {
-      job.image.should.equal(_image);
-      job.content.should.be.false;
-      done();
     });
   });
 
@@ -155,22 +139,4 @@ describe('extracter', function () {
     require('../lib/extracter')().should.equal(extracter);
   });
 
-  it('should able to copy snapshot when it has done before', function (done) {
-    var image;
-
-    if (!fs.existsSync('./snapshot/test')) {
-      fs.mkdirSync('./snapshot/test');
-    }
-
-    extracter.snapshot('http://localhost:7777/test/6', function (job) {
-      image = job.image;
-      extracter.snapshot('http://localhost:7777/test/6', {
-        image: './snapshot/test/test.png',
-        callback: function (job) {
-          makeSureImage(image);
-          makeSureImage('./snapshot/test/test.png', done);
-        }
-      });
-    });
-  });
 });

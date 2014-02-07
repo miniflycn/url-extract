@@ -80,13 +80,6 @@ describe('Job', function () {
     job.id.should.equal('test');
   });
 
-  it('should able to ignore cache', function () {
-    var job1 = new Job('http://localhost/test')
-      , job2 = new Job('http://localhost/test', { ignoreCache: true });
-    job1.cache.should.be.true;
-    job2.cache.should.be.false;
-  });
-
   it('should able to set image path', function () {
     var job = new Job('http://localhost/test', { image: './snapshot/test.png' });
     job.image.should.equal('./snapshot/test.png');
