@@ -26,13 +26,16 @@
     "mocha": "*",
     "should": "*",
     "connect": "*",
-    "blanket": "*",
+    "blanket": "1.1.5",
     "coveralls": "*",
     "mocha-lcov-reporter": "*",
     "debug": "*"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "blanket": {
+      "pattern": "url-extract/lib"
+    }
   },
   "config": {
     "blanket": {
