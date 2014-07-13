@@ -2,7 +2,7 @@ module.exports = {
   wsPort: 3001,
   workerNum: 0,
 
-  maxJob: 100,
+  maxJob: 10,
   maxQueueJob: 0,
   viewportSize: { 
     width: 1024, 

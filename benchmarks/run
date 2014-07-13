@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+echo $1
+
+echo
+node $1 &
+pid=$!
+
+sleep 2
+
+wrk 'http://localhost:3000/snapshot?url=http://www.baidu.com' \
+  -d 30 \
+  -c 50 \
+  -t 8 \
+  --timeout 10s \
+
+kill $pid
