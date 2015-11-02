@@ -1,6 +1,6 @@
 {
   "name": "url-extract",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Snapshot & extract url library",
   "keywords": [
     "snapshot",
